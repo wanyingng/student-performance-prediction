@@ -1,11 +1,16 @@
 import os
 import sys
-from src.exception import CustomException
-from src.logger import logging
 import pandas as pd
 
+from src.exception import CustomException
+from src.logger import logging
+from src.components.data_transformation import DataTransformationConfig
+from src.components.data_transformation import DataTransformation
+
 from sklearn.model_selection import train_test_split
+
 from dataclasses import dataclass
+
 
 @dataclass
 class DataIngestionConfig:
@@ -13,9 +18,11 @@ class DataIngestionConfig:
     test_data_path: str = os.path.join("artifacts", "test.csv")
     raw_data_path: str = os.path.join("artifacts", "data.csv")
 
+
 class DataIngestion:
     def __init__(self):
         self.ingestion_config = DataIngestionConfig()
+
 
     def initiate_data_ingestion(self):
         """Provides functionality to read from the database."""
@@ -24,6 +31,7 @@ class DataIngestion:
             # Read the dataset from data source (CSV file, API, or database)
             df = pd.read_csv("notebook\data\StudentsPerformance.csv")
             logging.info("Read dataset as dataframe")
+            df.columns = df.columns.str.lower().str.replace(' ', '_').str.replace('/', '_')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
             df.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
@@ -40,6 +48,10 @@ class DataIngestion:
         except Exception as e:
             raise CustomException(e, sys)
 
+
 if __name__ == "__main__":
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data, test_data = obj.initiate_data_ingestion()
+
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(train_data, test_data)
