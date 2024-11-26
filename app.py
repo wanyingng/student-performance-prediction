@@ -35,6 +35,7 @@ def predict():
         results = predict_pipeline.predict(student_df)
 
         print("Completing prediction")
+        print(f"Predicted math score: {results[0]:.2f}")
         return render_template('form.html', results=f"{results[0]:.2f}")
 
 
