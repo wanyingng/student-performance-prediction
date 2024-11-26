@@ -35,7 +35,7 @@ def predict():
         results = predict_pipeline.predict(student_df)
 
         print("Completing prediction")
-        return render_template('form.html', results=results[0])
+        return render_template('form.html', results=f"{results[0]:.2f}")
 
 
 if __name__ == "__main__":
