@@ -13,7 +13,7 @@ def index():
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
-    if request.method =='GET':
+    if request.method == 'GET':
         return render_template('form.html')
     else:
         data = CustomData(
