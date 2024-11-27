@@ -13,9 +13,11 @@ from src.exception import CustomException
 from src.logger import logging
 from src.utils import save_object, evaluate_models
 
+
 @dataclass
 class ModelTrainerConfig:
     trained_model_file_path = os.path.join("artifacts", "model.pkl")
+
 
 class ModelTrainer:
     def __init__(self):
@@ -37,43 +39,51 @@ class ModelTrainer:
             )
             # Create a dictionary of models for training
             models = {
-                "Random Forest": RandomForestRegressor(),
-                "Decision Tree": DecisionTreeRegressor(),
-                "Gradient Boosting": GradientBoostingRegressor(),
+                "Random Forest": RandomForestRegressor(random_state=42, warm_start=True),
+                "Decision Tree": DecisionTreeRegressor(random_state=42),
+                "Gradient Boosting": GradientBoostingRegressor(random_state=42),
                 "Linear Regression": LinearRegression(),
-                "Ridge": Ridge(),
+                "Ridge": Ridge(random_state=42),
                 "Lasso": Lasso(),
-                "XGBRegressor": XGBRegressor(),
-                "CatBoosting Regressor": CatBoostRegressor(verbose=False),
-                "AdaBoost Regressor": AdaBoostRegressor(),
+                "XGBRegressor": XGBRegressor(random_state=42),
+                "CatBoosting Regressor": CatBoostRegressor(random_state=42, verbose=False),
+                "AdaBoost Regressor": AdaBoostRegressor(random_state=42),
             }
+            # Tune the hyperparameters of our tree-based models
             params = {
                 "Decision Tree": {
+                    'max_depth': [1, 4, 5, 6, 10, None],
+                    'min_samples_leaf': [1, 2, 5, 10, 15, 20, 100],
                     'criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
                 },
                 "Random Forest": {
-                    'n_estimators': [8,16,32,64,128,256]
+                    'n_estimators': [8, 16, 32, 64, 128, 256],
+                    'max_depth': [5, 10, 15],
+                    'min_samples_leaf': [1, 3, 5, 10, 50]
                 },
                 "Gradient Boosting": {
-                    'learning_rate': [.1,.01,.05,.001],
-                    'subsample': [0.6,0.7,0.75,0.8,0.85,0.9],
-                    'n_estimators': [8,16,32,64,128,256]
+                    'n_estimators': [8, 16, 32, 64, 128, 256],
+                    'learning_rate': [0.1, 0.01, 0.05, 0.001],
+                    'max_depth': [3, 4, 5, 6, 10],
+                    'subsample': [0.6, 0.7, 0.75, 0.8, 0.85, 0.9]
                 },
                 "Linear Regression": {},
                 "Ridge": {},
                 "Lasso": {},
                 "XGBRegressor": {
-                    'learning_rate': [.1,.01,.05,.001],
-                    'n_estimators': [8,16,32,64,128,256]
+                    'n_estimators': [8, 16, 32, 64, 128, 256],
+                    'learning_rate': [0.1, 0.01, 0.05, 0.001],
+                    'max_depth': [3, 4, 5, 6, 10],
+                    'min_child_weight': [1, 3]
                 },
                 "CatBoosting Regressor": {
-                    'depth': [6,8,10],
                     'learning_rate': [0.01, 0.05, 0.1],
+                    'depth': [6, 8, 10],
                     'iterations': [30, 50, 100]
                 },
                 "AdaBoost Regressor": {
-                    'learning_rate': [.1,.01,0.5,.001],
-                    'n_estimators': [8,16,32,64,128,256]
+                    'n_estimators': [8, 16, 32, 64, 128, 256],
+                    'learning_rate': [0.1, 0.01, 0.5, 0.001]
                 }
             }
 
