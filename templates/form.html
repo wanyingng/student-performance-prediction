@@ -7,7 +7,7 @@
         </h1>
         <div class="mb-3">
             <label class="form-label">Gender</label>
-            <select class="form-control" name="gender" placeholder="Enter you Gender" required>
+            <select class="form-control" name="gender" placeholder="Enter your gender" required>
                 <option class="placeholder" selected disabled value="">Select Gender</option>
                 <option value="male">
                     Male
@@ -19,7 +19,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Race or Ethnicity</label>
-            <select class="form-control" name="ethnicity" placeholder="Enter you ethnicity" required>
+            <select class="form-control" name="ethnicity" placeholder="Enter your ethnicity" required>
                 <option class="placeholder" selected disabled value="">Select Ethnicity</option>
                 <option value="group A">
                     Group A
@@ -41,7 +41,7 @@
         <div class="mb-3">
             <label class="form-label">Parental Level of Education</label>
             <select class="form-control" name="parental_level_of_education"
-                placeholder="Enter you Parent Education" required>
+                placeholder="Enter your parent education" required>
                 <option class="placeholder" selected disabled value="">Select Parent Education</option>
                 <option value="associate's degree">
                     associate's degree
@@ -65,7 +65,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Lunch Type</label>
-            <select class="form-control" name="lunch" placeholder="Enter you Lunch" required>
+            <select class="form-control" name="lunch" placeholder="Enter your lunch type" required>
                 <option class="placeholder" selected disabled value="">Select Lunch Type</option>
                 <option value="free/reduced">
                     free/reduced
@@ -77,7 +77,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Test preparation course</label>
-            <select class="form-control" name="test_preparation_course" placeholder="Enter you Course"
+            <select class="form-control" name="test_preparation_course" placeholder="Enter your course"
                 required>
                 <option class="placeholder" selected disabled value="">Select Test_course</option>
                 <option value="none">
@@ -89,17 +89,17 @@
             </select>
         </div>
         <div class="mb-3">
-            <label class="form-label">Writing score out of 100</label>
-            <input class="form-control" type="number" name="reading_score"
-                placeholder="Enter your Reading score" min='0' max='100' />
-        </div>
-        <div class="mb-3">
             <label class="form-label">Reading score out of 100</label>
-            <input class="form-control" type="number" name="writing_score"
-                placeholder="Enter your Reading Score" min='0' max='100' />
+            <input class="form-control" type="number" name="reading_score"
+                placeholder="Enter your reading score" min='0' max='100' />
         </div>
         <div class="mb-3">
-            <input class="btn btn-primary" type="submit" value="Predict Math score" required />
+            <label class="form-label">Writing score out of 100</label>
+            <input class="form-control" type="number" name="writing_score"
+                placeholder="Enter your writing score" min='0' max='100' />
+        </div>
+        <div class="mb-3">
+            <input class="btn btn-primary" type="submit" value="Predict math score" required />
         </div>
     </form>
     <h2>
